@@ -1,0 +1,8 @@
+"0","# df_full %>% "
+"0","#   select(dataset_expspace) %>% "
+"0","#   separate_longer_delim(cols = dataset_expspace, delim = "";"") %>% "
+"0","#   filter(!is.na(dataset_expspace)) %>% "
+"0","#   count(dataset_expspace) %>% "
+"0","#   writexl::write_xlsx(path = here::here(""output"", ""raw-experimental_space_categories.xlsx""))"
+"0","#   ggplot(aes(y=fct_reorder(dataset_expspace, n), x = n))+"
+"0","#   geom_col()"

@@ -1,0 +1,8 @@
+"0",""
+"0","metrics_unclean <- df_full %>% "
+"0","  select(performance_metrics) %>% "
+"0","  separate_longer_delim(performance_metrics, delim = "";"") %>% "
+"0","  separate_longer_delim(performance_metrics, delim = "","") %>% "
+"0","  mutate(performance_metrics = str_trim((performance_metrics)))"
+"0",""
+"0","  # writexl::write_xlsx(here::here(""output"", ""performance_metrics_unclean.xlsx""))"

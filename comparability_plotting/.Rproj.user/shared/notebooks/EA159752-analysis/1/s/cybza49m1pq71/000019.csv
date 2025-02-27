@@ -1,0 +1,2 @@
+"0",""
+"0","ggsave(plot = last_plot(), filename = ""Figure-cleaning_simplified.pdf"", path = here::here(""figures""), height = 100, width = 200, units = ""mm"", device = ""pdf"")"

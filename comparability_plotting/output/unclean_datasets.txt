@@ -1,0 +1,83 @@
+dataset n
+ADORE 1
+AMBIT Database Database 2
+Aquire 1
+Aranda et al. (2017) 1
+Austin et al. (2015) 1
+Benfenati (2011) 1
+Canadian Domestic Substances list 1
+Cassani et al. (2013) 1
+Cassotti et al. (2015) 1
+ChemIDplus database 1
+Chemical Toxicity Database 1
+Cheng et al. (2012) 1
+Cheng et al.(2011) 1
+Devillers (2001) 1
+EAT5 3
+ECETOC 1
+ECHA 2
+ECHA database 4
+ECHA’s risk assessment report 1
+ECOSAR 2
+ECOTOX Database 26
+ECOTOX database 2
+EFSA 2
+EFSA OpenTox database 1
+EPA fathead minnow acute toxicity database (EPAFHM) 1
+ESIS 1
+Eldred et al. (1999) 1
+EnviChem 1
+EnviroTox 2
+EnviroTox database 1
+Environment (2014) 1
+European Food Safety Authority (EFSA) Database 1
+Fathead minnow database 2
+Furuhama et al. 2016 1
+HSDB 1
+Hommel compendium 1
+INERIS 1
+Japanese Ministry of Environment 2
+Japanese Ministry of Environment (2018) 2
+Japanese Ministry of the Environment 2
+Japanese National Institute of Technology and Evaluation (NITE) 1
+Jia et al. (2020) 1
+Khan et al. (2019) 1
+Khan et al. (2019a) 1
+Khan et al. 2019 1
+Khan et al. 2019a 1
+Khan et al. 2019b 1
+Li et al. (2017) 3
+Lyakurwa et al. (2014) 2
+Maran et al. (2007) 1
+Martin and Young (2001) 2
+Mid-Continent Ecology Division of US EPA ‘National Health and Environmental Effect Research Laboratory 1
+OASIS 3
+OECD QSAR Toolbox 3
+Office of Pesticide Programs (OPP) Pesticides Ecotoxicity Database 2
+PBT database 1
+PPDB (2015) 1
+Papa et al. (2005) 1
+Pesticide Properties Database (PPDB) 1
+Pesticides Properties Database (PPDB) 1
+REACH dossiers 1
+Raevsky et al. (2008) 1
+Russom et al. (1997) 3
+Sheffield et al. (2019) 1
+Singh et al. (2013) 1
+Singh et al. (2014) 1
+Su et al. (2014) 1
+Threshold Database provided by Procter & Gamble 1
+Toropov 2017 1
+Toropov et al. (2017) 1
+ToxValDB 4
+Toxicity Estimation Software Tool (T.E.S.T.) 2
+US EPA 1
+USEtox database 1
+Wei et al. (2015) 1
+Wu et al. (2016) 3
+Wu et al. 2016 1
+Yang et al. (2019) 1
+data provided by Solvay 1
+eChem 1
+not reported 1
+other unclear 1

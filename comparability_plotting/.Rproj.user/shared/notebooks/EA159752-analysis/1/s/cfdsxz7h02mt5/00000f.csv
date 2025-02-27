@@ -1,0 +1,18 @@
+"0","df_full %>% 
+  select(metrics_clear) %>% 
+  count(metrics_clear) %>% 
+  mutate(metric = ""Metrics reported"",
+         n_total = sum(n),
+         percent = round((n/n_total)*100),1) %>% 
+  ggplot(aes(y=metric, x=percent, fill = metrics_clear))+
+  geom_col(position=""stack"")+
+  scale_fill_manual(values = c(""no"" = ""red"",
+                               ""yes"" = ""green"",
+                               ""in code"" = muted(""green""),
+                               ""not reported"" = ""black"",
+                               NA = ""grey""))
+"
+"2","Fehler: Unerwartete(s) '=' in: 
+""                               ""not reported"" = ""black"",
+                               NA =""
+"

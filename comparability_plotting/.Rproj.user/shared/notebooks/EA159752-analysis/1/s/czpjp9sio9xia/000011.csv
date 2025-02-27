@@ -1,0 +1,11 @@
+"0",""
+"0","datasets_plot_aggregated <- datasets %>% "
+"0","  mutate(datasets_clean = fct_lump_min(datasets_clean, min = 3, other_level = ""Other (<3 uses)"")) %>%"
+"0","  count(datasets_clean) %>% "
+"0","  ggplot(aes(y=fct_reorder(datasets_clean, n), n))+"
+"0","  geom_col(col = ""darkgrey"", fill = ""#22577A"")+"
+"0","  labs(y=""Dataset"", x = ""Times used"")+"
+"0","  theme(plot.background = element_rect(colour = ""white"", fill=""white"", size=0))"
+"2","Warnung: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.
+Please use the `linewidth` argument instead."
+"0","datasets_plot_aggregated"
