@@ -8,8 +8,11 @@ editor: visual
 ## Load packages
 
 ```{r echo=FALSE}
-library(tidyverse)
-library(patchwork)
+if(!require('tidyverse'))install.packages('tidyverse')
+if(!require('patchwork'))install.packages('patchwork')
+if(!require('readxl'))install.packages('readxl')
+if(!require('janitor'))install.packages('janitor')
+if(!require('here'))install.packages('here')
 
 theme_set(theme_bw(base_size = 14))
 ```
@@ -23,6 +26,8 @@ df_full <- readxl::read_xlsx(here::here("input", "20250127-comparability_studies
 ```
 
 ## Datasets collapsed for single use sources
+
+The different datasets are cleaned up/unified and then counted and plotted.
 
 ```{r}
 
@@ -74,23 +79,9 @@ datasets_plot_aggregated
 # ggsave(plot = last_plot(), filename = "Datasets_counts_aggregated.pdf", path = here::here("figures"), height = 100, width = 150, units = "mm", device = "pdf")
 ```
 
-## Datasets all
-
-```{r}
-
-# datasets_plot_all <- datasets %>% 
-#   count(dataset) %>% 
-#   ggplot(aes(y=fct_reorder(dataset, n), n))+
-#   geom_col(col = "darkgrey", fill = "#22577A")+
-#   labs(y="Dataset", x = "Times used")+
-#   scale_y_discrete(labels = function(x) stringr::str_trunc(x, width = 26))
-# 
-# datasets_plot_all
-# 
-# ggsave(plot = last_plot(), filename = "Datasets_counts.pdf", path = here::here("figures"), height = 300, width = 200, units = "mm", device = "pdf")
-```
-
 ## Dataset versions reported
+
+A second plot is produced that shows the fraction of reported/not reported/single studies regarding reporting of the version/access date of the source.
 
 ```{r}
 # datasets_versions_reporting <- read_csv(here::here("input", "dataset_version_reported.csv"))
@@ -112,17 +103,9 @@ datasets_version_plot
 # ggsave(plot = last_plot(), filename = "Dataset_versions.pdf", path = here::here("figures"), height = 50, width = 100, units = "mm", device = "pdf")
 ```
 
+The second plot gets embedded into the first one.
+
 ```{r}
-# datasets_plot_all + (datasets_version_plot/plot_spacer()/plot_spacer()) + 
-  # plot_layout(widths = c(2,1)) +
-  # plot_annotation(tag_levels = "A")
-
-# datasets_plot_all / datasets_version_plot + 
-  # plot_layout(heights = c(5,1)) +
-  # plot_annotation(tag_levels = "A")
-
-# ggsave(plot = last_plot(), filename = "Patchwork-datasets_and_versions.pdf", path = here::here("figures"), height = 250, width = 200, units = "mm", device = "pdf")
-
 patchwork_plot_datasets_inset <- datasets_plot_aggregated + inset_element(datasets_version_plot, 0.3, 0.01, 0.99, 0.6, align_to = "panel", on_top = TRUE)+
   plot_annotation(tag_levels = "A")
 
@@ -131,104 +114,9 @@ patchwork_plot_datasets_inset
 ggsave(plot = patchwork_plot_datasets_inset, filename = "Figure-datasets_and_versions.pdf", path = here::here("figures"), height = 120, width = 200, units = "mm", device = "pdf")
 ```
 
-# Dataset cleaning
-
-```{r}
-
-# columns:
-#  [1] "entry_id"               "article"                "article_short"          "dataset"                "version"                "dataset_chemical_space" "dataset_tax_space"      "dataset_expspace"       "aggregation"            "missing_values"         "missing_values_desc"    "standardization"       
-# [13] "standardization_desc"   "outliers_removed"       "outliers_desc"          "modeling_task"          "effect_type"            "effect_endpoint"        "splitting"              "splitting_desc"         "splitting_exact"        "splitting_ratio"        "code_reported"          "metrics_clear"         
-# [25] "performance_metrics"    "dataset_availability" 
-
-
-```
-
-```{r}
-# aggregation, missing values, standardization, outliers
-
-
-
-```
-
-## Restrictions on experimental, chemical, and taxonomic space
-
-```{r}
-# df_full %>% 
-#   select(dataset_expspace) %>% 
-#   separate_longer_delim(cols = dataset_expspace, delim = ";") %>% 
-#   filter(!is.na(dataset_expspace)) %>% 
-#   count(dataset_expspace) %>% 
-#   writexl::write_xlsx(path = here::here("output", "raw-experimental_space_categories.xlsx"))
-#   ggplot(aes(y=fct_reorder(dataset_expspace, n), x = n))+
-#   geom_col()
-```
-
-```{r}
-# df_full %>% 
-#   select(dataset_chemical_space) %>% 
-#   separate_longer_delim(cols = dataset_chemical_space, delim = ";") %>% 
-#   count(dataset_chemical_space) %>% 
-#   writexl::write_xlsx(path = here::here("output", "raw-chemical_space_categories.xlsx"))
-#   
-# 
-# df_full %>% 
-#   select(dataset_chemical_space) %>% 
-#   separate_longer_delim(cols = dataset_chemical_space, delim = ";") %>% 
-#   count(dataset_chemical_space) %>% 
-#   filter(!is.na(dataset_chemical_space)) %>% 
-#   count(dataset_chemical_space) %>% 
-#   ggplot(aes(y=fct_reorder(dataset_chemical_space, n), x = n))+
-#   geom_col()
-```
-
-```{r}
-# df_full %>% 
-#   select(dataset_tax_space) %>% 
-#   separate_longer_delim(cols = dataset_tax_space, delim = ";") %>% 
-#   count(dataset_tax_space) %>% 
-#   writexl::write_xlsx(path = here::here("output", "raw-taxonomic_space_categories.xlsx"))
-#   
-#   filter(!is.na(dataset_chemical_space)) %>% 
-#   count(dataset_chemical_space) %>% 
-#   ggplot(aes(y=fct_reorder(dataset_chemical_space, n), x = n))+
-#   geom_col()
-```
-
-```{r}
-# df_chem_space_clean <- readxl::read_xlsx(path = here::here("input", "raw-chemical_space_categories_CLEANED.xlsx")) %>% 
-#   mutate(meta_category = "Chemical space") %>% 
-#   rename(small_category = 1)
-# 
-# 
-# df_exp_space_clean <- readxl::read_xlsx(path = here::here("input", "raw-experimental_space_categories-CLEANED.xlsx")) %>% 
-#   mutate(meta_category = "Experimental space") %>% 
-#   rename(small_category = 1, 
-#          coarse_groups = 2)
-# 
-# df_chem_space_clean %>% 
-#   colnames()
-# df_exp_space_clean %>% 
-#   colnames()
-# 
-# df_chem_space_clean %>% 
-#   rbind(df_exp_space_clean) %>% 
-#   mutate(coarse_groups = str_replace_all(coarse_groups, "NA", NA_character_)) %>% 
-#   filter(!is.na(coarse_groups)) %>% 
-#   group_by(meta_category, coarse_groups) %>% 
-#   summarize(sum = sum(n)) %>% 
-#   ggplot(aes(y=fct_reorder(coarse_groups,sum), x=sum, fill = meta_category))+
-#   geom_col(col = "darkgrey")+
-#   labs(fill = NULL,
-#        y = "Broad filtering categories",
-#        x = "Reported number of times")+
-#   scale_fill_brewer(palette = 2)+
-#   theme(legend.background = element_rect(fill="white", color = "black", size=0.5, linetype="solid"),
-#         legend.position = "inside",
-#         legend.position.inside = c(0.6, 0.2))
-
-```
-
 ## Aggregation
+
+Cleaning up of aggregation methods.
 
 ```{r}
 aggregation_unclean <- df_full %>% 
@@ -264,6 +152,8 @@ aggregation_clean <-
   
 ```
 
+Plotting of aggregation.
+
 ```{r}
 plot_aggregation <- aggregation_clean %>% 
   select(aggregation_simplified) %>% 
@@ -281,6 +171,8 @@ plot_aggregation
 ```
 
 ## Standardization
+
+Simplification and plotting of standardization responses.
 
 ```{r}
 
@@ -306,6 +198,8 @@ plot_standardization
 
 ## Missing values
 
+Simplification and plotting of missing values handling responses.
+
 ```{r}
 data_missing_values <- df_full %>% 
   select(missing_values) %>% 
@@ -325,6 +219,8 @@ plot_missing_values
 ```
 
 ## Outlier treatment
+
+Simplification and plotting of outlier treatment responses.
 
 ```{r}
 
@@ -347,15 +243,9 @@ plot_outlier_removal <- data_outlier_removal %>%
 plot_outlier_removal
 ```
 
-### Combination of cleaning plots
+### Single plot
 
-```{r}
-# plot_aggregation + plot_standardization + plot_missing_values + plot_outlier_removal + plot_layout(ncol = 2) + plot_annotation(tag_levels = "A")
-
-# ggsave(plot = last_plot(), filename = "Figure-cleaning.pdf", path = here::here("figures"), height = 150, width = 200, units = "mm", device = "pdf")
-```
-
-### single plot
+The answers for standardization, missing values, and outlier removal are combined into a single plot.
 
 ```{r}
 
@@ -388,6 +278,8 @@ cleaning_plot_simplified <- df_std %>%
         plot.caption.position =  "plot")
 ```
 
+The plot for aggregation and general cleaning are combined into a two-panel plot.
+
 ```{r}
 plot_aggregation + cleaning_plot_simplified + plot_layout(ncol = 2) + plot_annotation(tag_levels = "A")
 
@@ -395,6 +287,8 @@ ggsave(plot = last_plot(), filename = "Figure-cleaning_simplified.pdf", path = h
 ```
 
 ## Splitting
+
+Here, we clean, unify, and visualize the parameter that was used for splitting.
 
 ```{r}
 plot_split_parameter <- df_full %>% 
@@ -411,13 +305,15 @@ plot_split_parameter <- df_full %>%
   geom_col(col = "darkgrey", fill = "#386641")+
   labs(x="Number of entries",
        y="",
-       title = "Spliting category (Top5)")+
+       title = "Splitting category (Top5)")+
   theme(plot.caption = element_text(hjust = 0),
         plot.title.position = "plot",
         plot.caption.position =  "plot")
 
 plot_split_parameter
 ```
+
+Splitting ratios that were not among the top 5 answers are lumped together and visualized together with the most common answers.
 
 ```{r}
 plot_split_ratio <- df_full %>% 
@@ -436,6 +332,8 @@ plot_split_ratio <- df_full %>%
 plot_split_ratio
 ```
 
+Combine the two splitting-related plots into a two-panel figure.
+
 ```{r}
 plot_split_parameter + plot_split_ratio + plot_annotation(tag_levels = "A")
 
@@ -446,6 +344,8 @@ ggsave(plot = last_plot(), filename = "Plots_splitting.pdf", path = here::here("
 
 ### Save metrics for manual cleaning
 
+The metrics column is extracted and split to process each metric individually.
+
 ```{r}
 
 metrics_unclean <- df_full %>% 
@@ -454,10 +354,11 @@ metrics_unclean <- df_full %>%
   separate_longer_delim(performance_metrics, delim = ",") %>% 
   mutate(performance_metrics = str_trim((performance_metrics)))
 
-  # writexl::write_xlsx(here::here("output", "performance_metrics_unclean.xlsx"))
 ```
 
 ### Load and process cleaned metrics
+
+Manual cleaning and unification of the metrics. Visualization of the 10 most common metrics.
 
 ```{r}
 
@@ -517,6 +418,8 @@ plot_performance_metrics
 # ggsave(plot = last_plot(), filename = "plot_performance_metrics.pdf", path = here::here("figures"), height = 80, width = 100, units = "mm", device = "pdf")
 ```
 
+Visualization of the modeling task.
+
 ```{r}
 plot_modeling_task <- df_full %>% 
   select(modeling_task) %>% 
@@ -534,6 +437,8 @@ plot_modeling_task <- df_full %>%
 
 plot_modeling_task
 ```
+
+Visualization of whether metrics are reported clearly.
 
 ```{r}
 
@@ -565,6 +470,8 @@ plot_metrics_clear <-
 plot_metrics_clear
 ```
 
+Combine the plots for performance metrics, modeling task, and reporting of metrics into a three-panel figure.
+
 ```{r}
 plot_performance_metrics + plot_modeling_task + plot_metrics_clear + plot_annotation(tag_levels = "A")
 
@@ -574,6 +481,8 @@ ggsave(plot = last_plot(), filename = "plots_performance_metrics_task_reporting.
 ## Reporting
 
 ### Code provided
+
+Cleaning and visualization of responses to provided code.
 
 ```{r}
 
@@ -610,6 +519,8 @@ plot_code_reported <-
 
 plot_code_reported
 ```
+
+Cleaning and visualization of dataset availability.
 
 ```{r}
 plot_dataset_availability <-
@@ -648,6 +559,8 @@ plot_dataset_availability <-
 
 plot_dataset_availability
 ```
+
+Combination of the plots for code reporting and dataset availability into a two-panel figure.
 
 ```{r}
 plot_code_reported + plot_dataset_availability + plot_annotation(tag_levels = "A")

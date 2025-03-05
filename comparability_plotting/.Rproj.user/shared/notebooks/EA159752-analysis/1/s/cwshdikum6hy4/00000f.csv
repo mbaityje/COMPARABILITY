@@ -1,7 +1,0 @@
-"0",""
-"0","# columns:"
-"0","#  [1] ""entry_id""               ""article""                ""article_short""          ""dataset""                ""version""                ""dataset_chemical_space"" ""dataset_tax_space""      ""dataset_expspace""       ""aggregation""            ""missing_values""         ""missing_values_desc""    ""standardization""       "
-"0","# [13] ""standardization_desc""   ""outliers_removed""       ""outliers_desc""          ""modeling_task""          ""effect_type""            ""effect_endpoint""        ""splitting""              ""splitting_desc""         ""splitting_exact""        ""splitting_ratio""        ""code_reported""          ""metrics_clear""         "
-"0","# [25] ""performance_metrics""    ""dataset_availability"" "
-"0",""
-"0",""
